@@ -33,6 +33,7 @@
 
     <!-- JavaScript Link -->
     <script type="text/javascript" src="{{ asset('js/Orders.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/Header.js') }}"></script>
 
     <!-- CSS Link -->
     <link rel="stylesheet" href="{{ asset('css/Header.css') }}" />

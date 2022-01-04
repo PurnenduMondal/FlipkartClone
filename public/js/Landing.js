@@ -31,13 +31,5 @@ $(document).ready(function () {
         slides[slideIndex - 1].setAttribute("style", "display:block;");
     }
 
-    //setInterval( function(){ $(".slideshow__nextButton")[0].click() }, 2000);
 
-    $(".adminLoginBtn").click(function(){
-        $(".loginForm").attr("action", "http://127.0.0.1:8000/admin/login");
-    });
-    
-    $(".header__userLoginBtn").click(function(){
-        $(".loginForm").attr("action", "http://127.0.0.1:8000/login");
-    });
 })

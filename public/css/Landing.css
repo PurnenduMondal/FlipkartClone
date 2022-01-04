@@ -3,6 +3,7 @@
     justify-content: space-between;
     border: 1px solid rgb(0 0 0 / 16%);
     padding: 0px 25px;
+    background-color: white;
 }
 
 .category__item {
@@ -132,8 +133,9 @@ to {opacity: 1}
 }
 
 .productSlider__itemImage > img {
-    height: 100%; 
-    width: auto;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .productSlider__itemText1 {
@@ -151,7 +153,7 @@ to {opacity: 1}
     text-overflow: ellipsis;
 }
 
-.product__discountedPrice {
+.product__sellingPrice {
     font-size: 16px;
     font-weight: 500;
 }

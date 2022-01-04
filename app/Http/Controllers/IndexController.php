@@ -15,9 +15,9 @@ class IndexController extends Controller
 
     public function ViewProductDetails($id) { 
 
-        $products = Product::find($id)->get();        
+        $product = Product::find($id);        
         $productImages = ProductImage::where('product_id',$id)->get();
 
-        return view('ProductDetails',compact('products','productImages'));
+        return view('ProductDetails',compact('product','productImages'));
     }
 }

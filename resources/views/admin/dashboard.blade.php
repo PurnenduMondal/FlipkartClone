@@ -1,11 +1,9 @@
 <x-admin>
-    <div style="display:flex">
+    <div style="display:flex;height: 100vh">
         @php 
         $sidebarItem = "Dashboard";
         @endphp
         <x-admin-sidebar :sidebarItem="$sidebarItem"/>
-
-        <div class="verticalLine" style="border-left: 1px solid #b1b1b1;"></div>
         
         <div class="p-3" style="width: 100%;">
             <div id="search">

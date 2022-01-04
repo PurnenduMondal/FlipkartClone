@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserProfileController;
 use App\Models\Product;
 use App\Models\User;
@@ -57,6 +58,8 @@ Route::prefix('admin/product')->group(function () {
 
     Route::get('/delete/{id}', [ProductController::class, 'Delete'])->name('delete_product')->middleware('admin');
 });
+
+
 // Route::prefix('admin/allusers')->group(function(){
 
 //     Route::get('/', [AllUserController::class, 'ViewAll'])->name('admin.orders')->middleware('admin');
@@ -100,12 +103,33 @@ Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function () {
     Route::post('/update_address', [UserProfileController::class, 'UpdateAddress'])->name('submit_address');
 });
 
-Route::get('/viewcart', function () {
-    return view('Cart');
-})->middleware(['auth'])->name('display_cart');
+// Route::get('/viewcart', function () {
+
+//     //$product = Product::find($value[0]);
+    
+//     return view('Cart');
+// })->middleware(['auth'])->name('display_cart');
+
+Route::prefix('cart')->group(function () {
+
+    Route::get('/', [CartController::class, 'ViewAll'])->name('display_cart');
+
+    Route::get('/insert/{id}', [CartController::class, 'Insert'])->name('insert_cartItem');
+
+    Route::get('/update/{id}', [CartController::class, 'Update'])->name('update_cartItem');
+
+    Route::get('/delete/{id}', [CartController::class, 'Delete'])->name('delete_cartItem');
+});
+
 
 Route::get('/vieworders', function () {
     return view('Orders');
 })->name('view_orders');
+
+
+
+Route::get('/viewcheckout', function () {
+    return view('CheckOut');
+})->name('view_checkout');
 
 require __DIR__ . '/auth.php';

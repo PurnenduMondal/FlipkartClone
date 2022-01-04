@@ -33,7 +33,8 @@
 
     <!-- JavaScript Link -->
     <script type="text/javascript" src="<?php echo e(asset('js/Cart.js')); ?>"></script>
-
+    <script type="text/javascript" src="<?php echo e(asset('js/Header.js')); ?>"></script>
+    
     <!-- CSS Link -->
     <link rel="stylesheet" href="<?php echo e(asset('css/Header.css')); ?>" />
     <link rel="stylesheet" href="<?php echo e(asset('css/Cart.css')); ?>" />
@@ -58,34 +59,58 @@
 
     <div class="cart__container">
         <div class="cart__items">
-            <div class="cart__header">
-                <p>My Cart</p>
-                <div class="cart__address">
-                    <img src="<?php echo e(asset('image/Pin.svg')); ?>" alt="">
-                    <span>Deliver to</span> 
-                    <div>Address</div>
-                </div>
-            </div>
-            <div class="cart__item">
-                <div class="cart__itemImage">
-                    <img src="https://rukminim1.flixcart.com/image/416/416/ktuewsw0/pen/d/3/0/2156824-reynolds-original-imag73htcuy84cqm.jpeg?q=70" alt="">
-                </div>
-                <div class="cart__textContents">
-                    <div class="cart__itemName">
-                        Reynolds Dominar Blue Pen Jar Ball Pen
+            <div style="box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px; background-color: white;">
+                <div class="cart__header">
+                    <p>My Cart (<?php echo e($cartProducts->count()); ?>)</p>
+                    <?php if( !$cartProducts->isEmpty() ): ?>
+                    <div class="cart__address">
+                        <img src="<?php echo e(asset('image/Pin.svg')); ?>" alt="">
+                        <span>Deliver to</span>
+                        <div>Address</div>
                     </div>
-                    <div class="itemPrice">
-                        <div class="product__discountedPrice">₹250</div>
-                        <div class="product__actualPrice">₹300</div>
-                        <div class="product__discount">13% off</div>
+                    <?php endif; ?>
+                </div>
+
+                <?php if(!$cartProducts->isEmpty()): ?>
+                <?php $__currentLoopData = $cartProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="cart__item">
+                    <div style="display: flex;">
+                        <div class="cart__itemImage">
+                            <img src="<?php echo e(asset('uploads/'.$productImages->firstWhere('product_id', $product->id)->image_name)); ?>"
+                                alt="">
+
+                        </div>
+                        <div class="cart__textContents">
+                            <div class="cart__itemName">
+                                <?php echo e($product->name); ?>
+
+                            </div>
+                            <div class="itemPrice">
+                                <div class="product__sellingPrice">&#8377;<span><?php echo e($product->selling_price * $cart_items_quentity[$product->id]); ?></span></div>
+                                <div class="product__actualPrice">&#8377;<span><?php echo e($product->actual_price * $cart_items_quentity[$product->id]); ?></span></div>
+                                <div class="product__discount"><?php echo e($product->discount); ?>% off</div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="item__remove">
-                       REMOVE 
+                    <div class="item__remove" style="padding-top: 10px; display: flex">
+
+                        <button class="cartItem__addRemoveBtn"> - </button>
+                        <div class="item__quantity">
+                            <input type="text" id="<?php echo e($product->id); ?>" name="quantity"
+                                value="<?php echo e($cart_items_quentity[$product->id]); ?>" disabled>
+                        </div>
+                        <button class="cartItem__addRemoveBtn"> + </button>
+
+                        <a href="<?php echo e(route('delete_cartItem', $product->id)); ?>" style="margin-left: 24px;">
+                            REMOVE
+                        </a>
                     </div>
                 </div>
-            </div>
-            <div class="cart__footer">
-                <button>PLACE ORDER</button>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <div class="cart__footer">
+                    <button>PLACE ORDER</button>
+                </div>
             </div>
         </div>
         <div class="cart__priceSection">
@@ -94,12 +119,12 @@
             </div>
             <div class="allPrices">
                 <div class="price__row">
-                    <div class="text">Price (1 items)</div>
-                    <div class="amount">₹224</div>
+                    <div class="text">Price (<?php echo e($cartProducts->count()); ?> items)</div>
+                    <div class="cart__totalActualPrice ">&#8377;<span><?php echo e($total_actual_price); ?></span></div>
                 </div>
                 <div class="price__row">
                     <div class="text">Discount</div>
-                    <div style="color:#3ca842" class="amount">-₹19</div>
+                    <div class="cart__totalDiscount" style="color:#3ca842" class="amount">-&#8377;<span><?php echo e($total_discount); ?></span></div>
                 </div>
                 <div class="price__row">
                     <div class="text">Delivery Charges</div>
@@ -107,11 +132,19 @@
                 </div>
                 <div class="price__row totalamount">
                     <div class="text">Total Amount</div>
-                    <div class="amount">₹224</div>
+                    <div class="cart__totalSellingPrice ">&#8377;<span><?php echo e($total_selling_price); ?></span></div>
                 </div>
             </div>
         </div>
+        <?php else: ?>
+        <div class="cart__empty">
+            <img src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90"
+                alt="">
+            <p>Your cart is empty!</p>
+            <a href="/">Shop now</a>
+        </div>
+        <?php endif; ?>
     </div>
 </body>
-</html>
-<?php /**PATH G:\xampp\htdocs\FlipkartClone\resources\views/Cart.blade.php ENDPATH**/ ?>
+
+</html><?php /**PATH G:\xampp\htdocs\FlipkartClone\resources\views/Cart.blade.php ENDPATH**/ ?>

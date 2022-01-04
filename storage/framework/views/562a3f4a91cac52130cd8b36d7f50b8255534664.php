@@ -4,7 +4,7 @@
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php $component->withAttributes([]); ?>
-    <div style="display:flex">
+    <div style="display:flex;height: 100vh">
         <?php 
         $sidebarItem = "Dashboard";
         ?>
@@ -20,8 +20,6 @@
 <?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
 <?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
 <?php endif; ?>
-
-        <div class="verticalLine" style="border-left: 1px solid #b1b1b1;"></div>
         
         <div class="p-3" style="width: 100%;">
             <div id="search">

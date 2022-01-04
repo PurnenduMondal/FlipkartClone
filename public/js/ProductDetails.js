@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('.product__smallImage:first').css('border', '2px solid rgb(40 116 240)');
+
     function imageZoom(imgID, resultID) {
         var img, lens, result, cx, cy;
         img = document.getElementById(imgID);
@@ -60,40 +62,42 @@ $(document).ready(function () {
 
     var isZoomed = false;
     window.onmouseover = function (e) {
-        if (e.target.parentElement.id === 'img-container') {
 
-            if (!isZoomed) {
+        try {
+            if (e.target.parentElement.id === 'img-container') {
 
-                var result = document.createElement("DIV");
-                result.setAttribute("class", "img-zoom-result");
-                result.setAttribute("id", "zoomed-img-result-id");
+                if (!isZoomed) {
 
-                img = document.getElementById('img-container');
-                img.parentElement.insertBefore(result, img);
+                    var result = document.createElement("DIV");
+                    result.setAttribute("class", "img-zoom-result");
+                    result.setAttribute("id", "zoomed-img-result-id");
 
-                imageZoom("largeImage", "zoomed-img-result-id");
-                isZoomed = true;
+                    img = document.getElementById('img-container');
+                    img.parentElement.insertBefore(result, img);
+
+                    imageZoom("largeImage", "zoomed-img-result-id");
+                    isZoomed = true;
+                }
+            } else {
+                $('.img-zoom-result').remove();
+                $('.img-zoom-lens').remove();
+                isZoomed = false;
             }
-        } else {
-            $('.img-zoom-result').remove();
-            $('.img-zoom-lens').remove();
-            isZoomed = false;
-        }
+        } 
+        catch (e) { }
 
-        if (e.target.parentElement.className === 'product__smallImage') {
-            var smallImage = e.target.parentElement.getElementsByTagName('img')[0];
-            //smallImage.parentElement.setAttribute('border', '2px solid #2874f0;');
+        if (e.target.className === 'product__smallImage') {
+            var smallImage = e.target.getElementsByTagName('img')[0];
             document.getElementById('largeImage').src = smallImage.src;
         }
 
     }
 
-        // $('.product__smallImage').mouseenter(function () {
-        //     $(this).parent().attr('border', '2px solid #2874f0;');
-        // });
-
-        // $('.product__smallImage').mouseleave(function () {
-        //     $(this).parent().attr('border', '1px solid rgb(0 0 0 / 16%)');
-        // })
+    $('.product__smallImage').mouseenter(function () {
+        $('.product__smallImage').css('border', 'none');
+        $('.product__smallImage').css('border-bottom', '1px solid rgb(0 0 0 / 16%)');
+        $(this).css('border', '2px solid rgb(40 116 240)');
+    })
+    
 
 })

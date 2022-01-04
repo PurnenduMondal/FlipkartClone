@@ -9,9 +9,8 @@
     </div>
     <div class="productSlider__itemText2">
 
-        <span class="product__discountedPrice">&#8377;{{ $product->price }}</span>
-        <span
-            class="product__actualPrice">&#8377;{{ $product->price - $product->price * ($product->discount / 100) }}</span>
+        <span class="product__sellingPrice">&#8377;{{ $product->selling_price }}</span>
+        <span class="product__actualPrice">&#8377;{{ $product->actual_price }}</span>
         <span class="product__discount">{{ $product->discount }}% off</span>
     </div>
 </a>

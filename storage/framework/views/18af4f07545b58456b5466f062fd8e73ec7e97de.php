@@ -41,7 +41,8 @@
                 <thead>
                     <tr>
                         <th class="text-center" scope="col">Name</th>
-                        <th class="text-center" scope="col">price</th>
+                        <th class="text-center" scope="col">selling price</th>                        
+                        <th class="text-center" scope="col">actual price</th>
                         <th class="text-center" scope="col">dicount</th>
                         <th class="text-center" scope="col">Edit</th>
                         <th class="text-center" scope="col">Delete</th>
@@ -51,7 +52,8 @@
                     <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td class="text-center"><?php echo e($product->name); ?></td>
-                        <td class="text-center"><?php echo e($product->price); ?></td>
+                        <td class="text-center"><?php echo e($product->selling_price); ?></td>
+                        <td class="text-center"><?php echo e($product->actual_price); ?></td>
                         <td class="text-center"><?php echo e($product->discount); ?>%</td>
                         <td class="text-center">
                             <form method="post">
@@ -77,16 +79,22 @@
             </table>
         </div>
 
-        <form method="post" action="<?php echo e(route('insert_product')); ?>" class="p-3" enctype="multipart/form-data" style="display:flex; flex-direction:column; align-items:center;margin-top:10px">
+        <form method="post" action="<?php echo e(route('insert_product')); ?>" class="p-3 d-flex flex-column align-items-center" enctype="multipart/form-data" style=" margin-top:10px">
             <?php echo csrf_field(); ?>
-            <input type="text" name="name" placeholder="Product Name">
-            <input type="text" name="category" placeholder="category">
-            <input type="text" name="subcategory" placeholder="subCategory">
-            <input type="number"  name="price" placeholder="price">
-            <input type="number"  name="discount" placeholder="discount">
-            <input type="file"  name="image" placeholder="image">
+            <div >
+            <input type="text" name="name" placeholder="Product Name" class="form-control shadow-none m-2">
+            <input type="text" name="category" placeholder="category" class="form-control shadow-none m-2">
+            <input type="text" name="subcategory" placeholder="subCategory" class="form-control shadow-none m-2">
+            <input type="number"  name="selling_price" placeholder="Selling price" class="form-control shadow-none m-2">
+            <input type="number"  name="actual_price" placeholder="Actual price" class="form-control shadow-none m-2">
+            <input type="number"  name="discount" placeholder="discount" class="form-control shadow-none m-2">
+            <input type="file" accept="image/*" name="product-images[]" class="product-images form-control shadow-none m-2" placeholder="image" multiple>
+            </div>
+
+            <div class="preview_img d-flex flex-wrap" style="padding:10px 0;width: 230px;">
+            </div>
             
-            <button type="submit" name="createNewCourseBtn" class="addbtn btn btn-primary">Insert Product</button>
+            <button type="submit" name="createNewCourseBtn" class="addbtn btn btn-primary ">Insert Product</button>
         </form>
     </div>
  <?php echo $__env->renderComponent(); ?>

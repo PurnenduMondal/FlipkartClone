@@ -33,6 +33,7 @@
 
     <!-- JavaScript Link -->
     <script type="text/javascript" src="<?php echo e(asset('js/Landing.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('js/Header.js')); ?>"></script>
 
     <!-- CSS Link -->
     <link rel="stylesheet" href="<?php echo e(asset('css/Header.css')); ?>" />

@@ -33,7 +33,8 @@
 
     <!-- JavaScript Link -->
     <script type="text/javascript" src="{{ asset('js/Cart.js') }}"></script>
-
+    <script type="text/javascript" src="{{ asset('js/Header.js') }}"></script>
+    
     <!-- CSS Link -->
     <link rel="stylesheet" href="{{ asset('css/Header.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/Cart.css') }}" />
@@ -47,34 +48,57 @@
 
     <div class="cart__container">
         <div class="cart__items">
-            <div class="cart__header">
-                <p>My Cart</p>
-                <div class="cart__address">
-                    <img src="{{asset('image/Pin.svg')}}" alt="">
-                    <span>Deliver to</span> 
-                    <div>Address</div>
-                </div>
-            </div>
-            <div class="cart__item">
-                <div class="cart__itemImage">
-                    <img src="https://rukminim1.flixcart.com/image/416/416/ktuewsw0/pen/d/3/0/2156824-reynolds-original-imag73htcuy84cqm.jpeg?q=70" alt="">
-                </div>
-                <div class="cart__textContents">
-                    <div class="cart__itemName">
-                        Reynolds Dominar Blue Pen Jar Ball Pen
+            <div style="box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px; background-color: white;">
+                <div class="cart__header">
+                    <p>My Cart ({{ $cartProducts->count() }})</p>
+                    @if( !$cartProducts->isEmpty() )
+                    <div class="cart__address">
+                        <img src="{{asset('image/Pin.svg')}}" alt="">
+                        <span>Deliver to</span>
+                        <div>Address</div>
                     </div>
-                    <div class="itemPrice">
-                        <div class="product__discountedPrice">₹250</div>
-                        <div class="product__actualPrice">₹300</div>
-                        <div class="product__discount">13% off</div>
+                    @endif
+                </div>
+
+                @if(!$cartProducts->isEmpty())
+                @foreach ($cartProducts as $product)
+                <div class="cart__item">
+                    <div style="display: flex;">
+                        <div class="cart__itemImage">
+                            <img src="{{asset('uploads/'.$productImages->firstWhere('product_id', $product->id)->image_name)}}"
+                                alt="">
+
+                        </div>
+                        <div class="cart__textContents">
+                            <div class="cart__itemName">
+                                {{$product->name}}
+                            </div>
+                            <div class="itemPrice">
+                                <div class="product__sellingPrice">&#8377;<span>{{ $product->selling_price * $cart_items_quentity[$product->id]}}</span></div>
+                                <div class="product__actualPrice">&#8377;<span>{{ $product->actual_price * $cart_items_quentity[$product->id]}}</span></div>
+                                <div class="product__discount">{{ $product->discount }}% off</div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="item__remove">
-                       REMOVE 
+                    <div class="item__remove" style="padding-top: 10px; display: flex">
+
+                        <button class="cartItem__addRemoveBtn"> - </button>
+                        <div class="item__quantity">
+                            <input type="text" id="{{ $product->id }}" name="quantity"
+                                value="{{$cart_items_quentity[$product->id]}}" disabled>
+                        </div>
+                        <button class="cartItem__addRemoveBtn"> + </button>
+
+                        <a href="{{route('delete_cartItem', $product->id)}}" style="margin-left: 24px;">
+                            REMOVE
+                        </a>
                     </div>
                 </div>
-            </div>
-            <div class="cart__footer">
-                <button>PLACE ORDER</button>
+                @endforeach
+                <div class="cart__footer">
+                    <button>PLACE ORDER</button>
+                </div>
             </div>
         </div>
         <div class="cart__priceSection">
@@ -83,12 +107,12 @@
             </div>
             <div class="allPrices">
                 <div class="price__row">
-                    <div class="text">Price (1 items)</div>
-                    <div class="amount">₹224</div>
+                    <div class="text">Price ({{ $cartProducts->count() }} items)</div>
+                    <div class="cart__totalActualPrice ">&#8377;<span>{{$total_actual_price}}</span></div>
                 </div>
                 <div class="price__row">
                     <div class="text">Discount</div>
-                    <div style="color:#3ca842" class="amount">-₹19</div>
+                    <div class="cart__totalDiscount" style="color:#3ca842" class="amount">-&#8377;<span>{{$total_discount}}</span></div>
                 </div>
                 <div class="price__row">
                     <div class="text">Delivery Charges</div>
@@ -96,10 +120,19 @@
                 </div>
                 <div class="price__row totalamount">
                     <div class="text">Total Amount</div>
-                    <div class="amount">₹224</div>
+                    <div class="cart__totalSellingPrice ">&#8377;<span>{{$total_selling_price }}</span></div>
                 </div>
             </div>
         </div>
+        @else
+        <div class="cart__empty">
+            <img src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90"
+                alt="">
+            <p>Your cart is empty!</p>
+            <a href="/">Shop now</a>
+        </div>
+        @endif
     </div>
 </body>
+
 </html>

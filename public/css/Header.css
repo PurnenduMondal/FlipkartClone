@@ -13,6 +13,9 @@ body {
     padding-left: 124px;
     padding-right: 124px;
     height: 56px;
+    position: sticky;
+    z-index: 100;
+    top: 0;
 }
 .header__logo {
     padding-left: 62px;
@@ -154,7 +157,7 @@ body {
   top: -18px;
   left: 0;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
 } 
 
 .loginForm__input input:focus, 
@@ -201,11 +204,9 @@ body {
 
 .header__moreOptions:hover .header__dropdown {
     display: block;
-    box-shadow: 0 0px 10px 0 rgb(0 0 0 / 20%);
 }
 .header__userLogin:hover .header__dropdown {
     display: block;
-    box-shadow: 0 0px 10px 0 rgb(0 0 0 / 20%);
 }
 
 .header__dropdown {
@@ -213,14 +214,15 @@ body {
     z-index: 1;
     color: black;
     position: absolute;
-    background-color: white;
     top: 32px;
     left: -90px;
     width: 240px;
     border-radius: 3px;
+    margin: -5px;
 }
 .header__dropdownItem {
     display: flex;
+    background-color: white;
     padding: 15px 8px;
     border-top: 1px solid rgb(0 0 0 / 13%);
     font-weight: 400;

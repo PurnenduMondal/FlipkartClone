@@ -32,7 +32,7 @@
 
     <!-- JavaScript Link -->
     <script type="text/javascript" src="{{ asset('js/ProductDetails.js') }}"></script>
-
+    <script type="text/javascript" src="{{ asset('js/Header.js') }}"></script>
     <script src="https://unpkg.com/js-image-zoom/js-image-zoom.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-image-zoom/js-image-zoom.min.js"></script>
 
@@ -48,51 +48,47 @@
 
     <div class="productdetails">
         <div class="product__imageColumn">
+
+            @foreach ($productImages as $productImage)
             <div class="product__smallImage">
                 <img
-                    src="https://rukminim1.flixcart.com/image/416/416/kg8avm80/mobile/r/h/z/apple-iphone-12-dummyapplefsn-original-imafwg8dqgncgbcb.jpeg?q=70">
+                    src="{{asset('uploads/'.$productImage->image_name)}}">
             </div>
-            <div class="product__smallImage">
-                <img
-                    src="https://rukminim1.flixcart.com/image/416/416/kg8avm80/mobile/r/h/z/apple-iphone-12-dummyapplefsn-original-imafwg8duby8qbn4.jpeg?q=70">
-            </div>
-            <div class="product__smallImage">
-                <img
-                    src="https://rukminim1.flixcart.com/image/416/416/kg8avm80/mobile/r/h/z/apple-iphone-12-dummyapplefsn-original-imafwg8dv9jzxfdy.jpeg?q=70">
-            </div>
+            @endforeach
+
         </div>
         <div>
             <div class="product__largeImage">
 
-                <div id="img-container" >
-                    <img id="largeImage"
-                        src="https://rukminim1.flixcart.com/image/800/800/kg8avm80/mobile/r/h/z/apple-iphone-12-dummyapplefsn-original-imafwg8dqgncgbcb.jpeg?q=70">
+                <div id="img-container">
+                    <img id="largeImage" src="{{asset('uploads/'.$productImages[0]->image_name)}}">
 
                 </div>
                 <!-- <div id="zoomed-img-result-id" class="img-zoom-result"></div> -->
             </div>
             <div class="product__actionButtons">
-                <button class="product__addToCartButton">
+                <a class="product__addToCartButton" href= {{route('insert_cartItem', $product->id)}} >
                     <span class="material-icons">
                         shopping_cart
                     </span>
                     <span>ADD TO CART</span>
-                </button>
-                <button class="product__buyButton">
+                </a>
+                <a class="product__buyButton" >
                     <span class="material-icons">
                         flash_on
                     </span>
                     <span>BUY NOW</span>
-                </button>
+                </a>
             </div>
         </div>
 
         <div class="product__textContainer">
-            <p> Home > Mobiles </p>
-            <h1>APPLE iPhone 12</h1>
-            <span class="product__discountedPrice">&#8377;56,999</span>
-            <span class="product__actualPrice">&#8377;65,900</span>
-            <span class="product__discount">13% off</span>
+            <p style="font-size:12px;color:#878787;display:flex;margin-bottom: 5px;"> Home <span
+                    style="font-size:14px;padding:2px;" class="material-icons">chevron_right</span> Mobiles </p>
+            <h1>{{ $product->name }}</h1>
+            <span class="product__sellingPrice">&#8377;{{ $product->selling_price }}</span>
+            <span class="product__actualPrice">&#8377;{{ $product->actual_price }}</span>
+            <span class="product__discount">{{ $product->discount }}% off</span>
 
             <h6>Available offers</h6>
             <div class="product__offer">
@@ -115,7 +111,28 @@
                     src="https://rukminim1.flixcart.com/www/18/18/promos/06/09/2016/c22c9fc4-0555-4460-8401-bf5c28d7ba29.png?q=90">
                 Bank Offer 20% off on 1st txn with Amex Network Cards issued by SBI Cards and Mobikwik
             </div>
-
+            <div class="more_infoContrainer" style="padding-top: 24px;">
+                <div class="d-flex">
+                    <div style="width: 110px;">Highlights</div>
+                    <div>
+                        <ul>
+                            <li>Top Quality Product</li>
+                            <li>Excellent Brand Support</li>
+                            <li>Durable</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div style="width: 110px;">Services</div>
+                    <div>
+                        <ul>
+                            <li>Cash on Delivery</li>
+                            <li>Net banking & Credit/ Debit/ ATM card</li>
+                            <li>14 Days Return Policy</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

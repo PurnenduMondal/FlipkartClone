@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Storage;
-
 class ProductController extends Controller
 {
     
@@ -30,19 +29,16 @@ class ProductController extends Controller
             'category' => $request->category,
             'subcategory' => $request->subcategory,
             'name' => $request->name,
-            'price' => $request->price,
+            'selling_price' => $request->selling_price,
+            'actual_price' => $request->actual_price,
             'discount' => $request->discount
         ]);
-        $validatedData = $request->validate(['image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',]);
 
-        if ($request->hasFile('image')) {
-            ProductImage::insertGetId([
-                'product_id' => $product_id,
-                'image_name' => $request->file('image')->getClientOriginalName(),
-            ]); 
+		foreach($request->file('product-images') as $image) {
+            ProductImage::insert(['product_id' => $product_id,'image_name' => $image->getClientOriginalName()]);
+            $image->storeAs('uploads',$image->getClientOriginalName(), ['disk' => 'public']);
+		}
 
-            Storage::disk('public')->put($request->file('image')->getClientOriginalName(), $request->file('image')->get());
-        }
         return redirect()->route('admin.products');
     }  
 

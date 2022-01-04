@@ -10,9 +10,8 @@
     </div>
     <div class="productSlider__itemText2">
 
-        <span class="product__discountedPrice">&#8377;<?php echo e($product->price); ?></span>
-        <span
-            class="product__actualPrice">&#8377;<?php echo e($product->price - $product->price * ($product->discount / 100)); ?></span>
+        <span class="product__sellingPrice">&#8377;<?php echo e($product->selling_price); ?></span>
+        <span class="product__actualPrice">&#8377;<?php echo e($product->actual_price); ?></span>
         <span class="product__discount"><?php echo e($product->discount); ?>% off</span>
     </div>
 </a>
