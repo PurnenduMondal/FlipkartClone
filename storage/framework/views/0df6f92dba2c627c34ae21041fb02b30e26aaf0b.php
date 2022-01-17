@@ -43,11 +43,11 @@
                     Products
                 </a>
             </li>
-            <!-- <li>
-                <a href="" class="nav-link <?php echo e($sidebarItem == 'Category' ? 'active' : 'link-dark'); ?>">
+            <li>
+                <a href="<?php echo e(route('admin.orders')); ?>" class="nav-link <?php echo e($sidebarItem == 'Orders' ? 'active' : 'link-dark'); ?>">
                     Orders
                 </a>
-            </li> -->
+            </li>
         </ul>
     </div>
 </div>    

@@ -34,7 +34,7 @@
     <!-- JavaScript Link -->
     <script type="text/javascript" src="{{ asset('js/Cart.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/Header.js') }}"></script>
-    
+
     <!-- CSS Link -->
     <link rel="stylesheet" href="{{ asset('css/Header.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/Cart.css') }}" />
@@ -74,8 +74,10 @@
                                 {{$product->name}}
                             </div>
                             <div class="itemPrice">
-                                <div class="product__sellingPrice">&#8377;<span>{{ $product->selling_price * $cart_items_quentity[$product->id]}}</span></div>
-                                <div class="product__actualPrice">&#8377;<span>{{ $product->actual_price * $cart_items_quentity[$product->id]}}</span></div>
+                                <div class="product__sellingPrice">&#8377;<span>{{ $product->selling_price *
+                                        $cart_items_quentity[$product->id]}}</span></div>
+                                <div class="product__actualPrice">&#8377;<span>{{ $product->actual_price *
+                                        $cart_items_quentity[$product->id]}}</span></div>
                                 <div class="product__discount">{{ $product->discount }}% off</div>
                             </div>
 
@@ -96,10 +98,13 @@
                     </div>
                 </div>
                 @endforeach
+                @csrf
                 <div class="cart__footer">
+                    <input type="hidden" value="124" name="amount">
                     <button>PLACE ORDER</button>
                 </div>
             </div>
+
         </div>
         <div class="cart__priceSection">
             <div class="priceDetails">
@@ -112,7 +117,8 @@
                 </div>
                 <div class="price__row">
                     <div class="text">Discount</div>
-                    <div class="cart__totalDiscount" style="color:#3ca842" class="amount">-&#8377;<span>{{$total_discount}}</span></div>
+                    <div class="cart__totalDiscount" style="color:#3ca842" class="amount">
+                        -&#8377;<span>{{$total_discount}}</span></div>
                 </div>
                 <div class="price__row">
                     <div class="text">Delivery Charges</div>
@@ -120,9 +126,53 @@
                 </div>
                 <div class="price__row totalamount">
                     <div class="text">Total Amount</div>
-                    <div class="cart__totalSellingPrice ">&#8377;<span>{{$total_selling_price }}</span></div>
+                    <div class="cart__totalSellingPrice ">&#8377;<span>{{ $total_selling_price }}</span></div>
                 </div>
             </div>
+
+            <form class="cart__payment" method='post' action="{{ route('make-payment') }}" data-cc-on-file="false"
+                data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
+                @csrf
+                @if (Session::has('success'))
+                <div class="alert alert-primary text-center">
+                    <p>{{ Session::get('success') }}</p>
+                </div>
+                @endif
+                <div style="display: flex">
+                    <div class="cart__cardPayment" style="font-size: 14px;">
+                        Credit / Debit / ATM Card
+                        <div class="cart__cardInput" style="width: 319px; margin-top: 8px;">
+                            <input type="number" class="card-number" required>
+                            <label for="">Enter Card Number</label>
+                        </div>
+                        <div style="display: flex">
+                            <div class="cart__cardDate" style="font-size: 14px;">
+                                Valid Thru
+                                <select class="expiration_month" style="border: none; margin-left:5px">
+                                    <option>MM</option>
+                                    @for ($i = 1; $i <= 12; $i++) <option value="{{$i}}">{{ $i }}</option>
+                                        @endfor
+                                </select>
+                                <select class="expiration_year" id="" style="border: none;">
+                                    <option>YY</option>
+                                    @for ($i = 22; $i <= 40; $i++) <option value="{{$i}}">{{ $i }}</option>
+                                        @endfor
+                                </select>
+                            </div>
+
+                            <div class="cart__cardInput" style="width: 128px;">
+                                <input class="cvv" type="number" required>
+                                <label for="">CVV</label>
+                            </div>
+                        </div>
+                        <div class="cart__payBtn">
+                            <input type="hidden" name='amount' value="{{$total_selling_price }}">
+                            <input type="hidden" name="cartproducts" value="{{ json_encode($cart_items_quentity) }}">
+                            <button type="submit">PAY &#8377;{{$total_selling_price }}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
         @else
         <div class="cart__empty">
@@ -134,5 +184,39 @@
         @endif
     </div>
 </body>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        var $form = $(".cart__payment");
+        $('form.cart__payment').bind('submit', function (e) {
+
+            if (!$form.data('cc-on-file')) {
+                e.preventDefault();
+                Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+                Stripe.createToken({
+                    number: $('.card-number').val(),
+                    cvc: $('.cvc').val(),
+                    exp_month: $('.expiration_month').val(),
+                    exp_year: $('.expiration_year').val()
+                }, stripeRes);
+            }
+        })
+
+        function stripeRes(status, response) {
+            if (response.error) {
+                console.log(response.error.message);
+            } else {
+                var token = response['id'];
+                $form.find('input[type=text]').empty();
+                $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+                $form.get(0).submit();
+            }
+        }
+    });
+
+</script>
 
 </html>

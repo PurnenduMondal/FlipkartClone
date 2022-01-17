@@ -43,11 +43,11 @@
                     Products
                 </a>
             </li>
-            <!-- <li>
-                <a href="" class="nav-link {{ $sidebarItem == 'Category' ? 'active' : 'link-dark'}}">
+            <li>
+                <a href="{{route('admin.orders')}}" class="nav-link {{ $sidebarItem == 'Orders' ? 'active' : 'link-dark'}}">
                     Orders
                 </a>
-            </li> -->
+            </li>
         </ul>
     </div>
 </div>    

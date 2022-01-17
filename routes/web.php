@@ -5,7 +5,10 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\StripeController;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -43,6 +46,9 @@ Route::prefix('admin')->group(function () {
     // Route::post('/update', [AdminController::class, 'Update'])->name('update_admin')->middleware('admin');
 
     // Route::get('/delete/{id}', [AdminController::class, 'Delete'])->name('delete_admin')->middleware('admin');
+
+    Route::get('/orders', [AdminController::class, 'Orders'])->name('admin.orders')->middleware('admin');
+    Route::post('/orders/{id}', [AdminController::class, 'UpdateOrderStatus'])->name('admin.orders_status')->middleware('admin');
 
 });
 
@@ -119,11 +125,27 @@ Route::prefix('cart')->group(function () {
     Route::get('/update/{id}', [CartController::class, 'Update'])->name('update_cartItem');
 
     Route::get('/delete/{id}', [CartController::class, 'Delete'])->name('delete_cartItem');
+
+    Route::post('/stripe', [StripeController::class, 'stripePost'])->name('make-payment');
 });
 
 
+
+Route::get('/welcome1', function () {
+    return view('welcome1');
+})->name('welcome1');
+
 Route::get('/vieworders', function () {
-    return view('Orders');
+
+    $orders = DB::table('orders')
+        ->select('name', 'selling_price', 'orders.id', 'orders.product_id', 'orders.quantity', 'orders.status', 'orders.created_at')
+        ->join('products', 'orders.product_id', '=', 'products.id')
+        ->where('user_id',  Auth::user()->id)
+        ->latest()
+        ->get();
+    
+    return view('Orders', compact('orders'));
+
 })->name('view_orders');
 
 

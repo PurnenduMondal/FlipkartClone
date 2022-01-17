@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
+use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon; 
 
@@ -17,6 +18,17 @@ class AdminController extends Controller
 
     public function Dashboard(){
         return view('admin.dashboard');
+    }
+
+    public function Orders(){
+        $orders = Order::latest()->get();
+        return view('admin.orders', compact('orders'));
+    }
+    public function UpdateOrderStatus(Request $request){
+        Order::findOrFail($request->id)->update([
+            'status' => $request->status
+        ]);
+        return redirect()->route('admin.orders');
     }
 
     public function Brands(){

@@ -34,7 +34,7 @@
     <!-- JavaScript Link -->
     <script type="text/javascript" src="<?php echo e(asset('js/Cart.js')); ?>"></script>
     <script type="text/javascript" src="<?php echo e(asset('js/Header.js')); ?>"></script>
-    
+
     <!-- CSS Link -->
     <link rel="stylesheet" href="<?php echo e(asset('css/Header.css')); ?>" />
     <link rel="stylesheet" href="<?php echo e(asset('css/Cart.css')); ?>" />
@@ -86,8 +86,10 @@
 
                             </div>
                             <div class="itemPrice">
-                                <div class="product__sellingPrice">&#8377;<span><?php echo e($product->selling_price * $cart_items_quentity[$product->id]); ?></span></div>
-                                <div class="product__actualPrice">&#8377;<span><?php echo e($product->actual_price * $cart_items_quentity[$product->id]); ?></span></div>
+                                <div class="product__sellingPrice">&#8377;<span><?php echo e($product->selling_price *
+                                        $cart_items_quentity[$product->id]); ?></span></div>
+                                <div class="product__actualPrice">&#8377;<span><?php echo e($product->actual_price *
+                                        $cart_items_quentity[$product->id]); ?></span></div>
                                 <div class="product__discount"><?php echo e($product->discount); ?>% off</div>
                             </div>
 
@@ -108,10 +110,13 @@
                     </div>
                 </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php echo csrf_field(); ?>
                 <div class="cart__footer">
+                    <input type="hidden" value="124" name="amount">
                     <button>PLACE ORDER</button>
                 </div>
             </div>
+
         </div>
         <div class="cart__priceSection">
             <div class="priceDetails">
@@ -124,7 +129,8 @@
                 </div>
                 <div class="price__row">
                     <div class="text">Discount</div>
-                    <div class="cart__totalDiscount" style="color:#3ca842" class="amount">-&#8377;<span><?php echo e($total_discount); ?></span></div>
+                    <div class="cart__totalDiscount" style="color:#3ca842" class="amount">
+                        -&#8377;<span><?php echo e($total_discount); ?></span></div>
                 </div>
                 <div class="price__row">
                     <div class="text">Delivery Charges</div>
@@ -135,6 +141,50 @@
                     <div class="cart__totalSellingPrice ">&#8377;<span><?php echo e($total_selling_price); ?></span></div>
                 </div>
             </div>
+
+            <form class="cart__payment" method='post' action="<?php echo e(route('make-payment')); ?>" data-cc-on-file="false"
+                data-stripe-publishable-key="<?php echo e(env('STRIPE_KEY')); ?>">
+                <?php echo csrf_field(); ?>
+                <?php if(Session::has('success')): ?>
+                <div class="alert alert-primary text-center">
+                    <p><?php echo e(Session::get('success')); ?></p>
+                </div>
+                <?php endif; ?>
+                <div style="display: flex">
+                    <div class="cart__cardPayment" style="font-size: 14px;">
+                        Credit / Debit / ATM Card
+                        <div class="cart__cardInput" style="width: 319px; margin-top: 8px;">
+                            <input type="number" class="card-number" required>
+                            <label for="">Enter Card Number</label>
+                        </div>
+                        <div style="display: flex">
+                            <div class="cart__cardDate" style="font-size: 14px;">
+                                Valid Thru
+                                <select class="expiration_month" style="border: none; margin-left:5px">
+                                    <option>MM</option>
+                                    <?php for($i = 1; $i <= 12; $i++): ?> <option value="<?php echo e($i); ?>"><?php echo e($i); ?></option>
+                                        <?php endfor; ?>
+                                </select>
+                                <select class="expiration_year" id="" style="border: none;">
+                                    <option>YY</option>
+                                    <?php for($i = 22; $i <= 40; $i++): ?> <option value="<?php echo e($i); ?>"><?php echo e($i); ?></option>
+                                        <?php endfor; ?>
+                                </select>
+                            </div>
+
+                            <div class="cart__cardInput" style="width: 128px;">
+                                <input class="cvv" type="number" required>
+                                <label for="">CVV</label>
+                            </div>
+                        </div>
+                        <div class="cart__payBtn">
+                            <input type="hidden" name='amount' value="<?php echo e($total_selling_price); ?>">
+                            <input type="hidden" name="cartproducts" value="<?php echo e(json_encode($cart_items_quentity)); ?>">
+                            <button type="submit">PAY &#8377;<?php echo e($total_selling_price); ?></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
         <?php else: ?>
         <div class="cart__empty">
@@ -146,5 +196,39 @@
         <?php endif; ?>
     </div>
 </body>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        var $form = $(".cart__payment");
+        $('form.cart__payment').bind('submit', function (e) {
+
+            if (!$form.data('cc-on-file')) {
+                e.preventDefault();
+                Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+                Stripe.createToken({
+                    number: $('.card-number').val(),
+                    cvc: $('.cvc').val(),
+                    exp_month: $('.expiration_month').val(),
+                    exp_year: $('.expiration_year').val()
+                }, stripeRes);
+            }
+        })
+
+        function stripeRes(status, response) {
+            if (response.error) {
+                console.log(response.error.message);
+            } else {
+                var token = response['id'];
+                $form.find('input[type=text]').empty();
+                $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+                $form.get(0).submit();
+            }
+        }
+    });
+
+</script>
 
 </html><?php /**PATH G:\xampp\htdocs\FlipkartClone\resources\views/Cart.blade.php ENDPATH**/ ?>

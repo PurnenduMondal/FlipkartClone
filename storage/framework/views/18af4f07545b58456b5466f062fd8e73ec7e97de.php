@@ -22,7 +22,7 @@
 <?php endif; ?>
         
         <div class="p-3" style="width: 100%;">
-            <div id="search">
+            <!-- <div id="search">
                 <form method="POST" style="display:flex;padding-top:10px">
                     <div class="form-group">
                         <input name="searchtext" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Search a Student">
@@ -35,7 +35,7 @@
                         </button>
                     </div>
                 </form>
-            </div>
+            </div> -->
         
             <table class="table">
                 <thead>
@@ -57,6 +57,7 @@
                         <td class="text-center"><?php echo e($product->discount); ?>%</td>
                         <td class="text-center">
                             <form method="post">
+                                <?php echo csrf_field(); ?>
                                 <a style="height:23px" name="profileBtn" href="<?php echo e(route('admin.edit-product', $product->id)); ?>" type="submit" class="btn btn-sm">
                                     <span class="material-icons">
                                         edit

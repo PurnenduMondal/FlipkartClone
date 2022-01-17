@@ -6,7 +6,7 @@
         <x-admin-sidebar :sidebarItem="$sidebarItem"/>
         
         <div class="p-3" style="width: 100%;">
-            <div id="search">
+            <!-- <div id="search">
                 <form method="POST" style="display:flex;padding-top:10px">
                     <div class="form-group">
                         <input name="searchtext" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Search a Student">
@@ -19,7 +19,7 @@
                         </button>
                     </div>
                 </form>
-            </div>
+            </div> -->
         
             <table class="table">
                 <thead>
@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-center">student1</td>
+                        <td class="text-center">{{Auth::user()->name}}</td>
                         <td class="text-center">
                             <form method="post">
                                 <input type="hidden" name="rowId" value="1">
@@ -57,13 +57,6 @@
             </table>
         </div>
 
-
-        <form class="p-3" style="display:flex; align-items:center; flex-direction:column;margin-top:10px" method="post">
-            <input style="width:200px" type="text" name="courseName" placeholder="Course Name">
-            <input style="width:200px" type="number" min="2010" max="9999" name="batchYear" placeholder="Batch Year">
-            <input style="width:200px" type="number" min="2" max="10" name="semCount" placeholder="Number Of Semesters">
-            <button type="submit" name="createNewCourseBtn" class="addbtn btn btn-primary">Add A New Course</button>
-        </form>
 
     </div>
 </x-admin>

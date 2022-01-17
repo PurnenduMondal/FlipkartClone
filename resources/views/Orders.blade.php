@@ -67,27 +67,34 @@
         </div>
 
         <div class="order__items">
+            @foreach ($orders as $order)
+            @php 
+            $orderImage = App\Models\ProductImage::where('product_id', $order->product_id)->first();
+            @endphp
             <div class="order__item">
                 <div style='display:flex;'>
                     <div class="order__itemImage">
-                        <img src="https://rukminim1.flixcart.com/image/416/416/ktuewsw0/pen/d/3/0/2156824-reynolds-original-imag73htcuy84cqm.jpeg?q=70"
+                        <img src="{{asset('uploads/'.$orderImage->image_name)}}"
                             alt="">
                     </div>
                     <div class="order__itemName">
-                        Reynolds Dominar Blue Pen Jar Ball Pen
+                        {{ $order->name }}
                     </div>
                 </div>
-
+                <div>
+                    Qty. {{ $order->quantity }}
+                </div>
                 <div class="itemPrice">
-                    ₹244
+                    ₹{{$order->selling_price}}
                 </div>
                 <div class="order__status">
-                    <div></div> Delivered
+                    <div></div> {{$order->status}}
                 </div>
                 <div class="order__cancelOrder">
                     <img src="{{asset('image/ordercancel.svg')}}" alt=""> Cancel Order
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 
