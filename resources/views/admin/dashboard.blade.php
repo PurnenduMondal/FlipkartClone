@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-center">{{Auth::user()->name}}</td>
+                        <td class="text-center">{{Auth::guard('admin')->user()->name}}</td>
                         <td class="text-center">
                             <form method="post">
                                 <input type="hidden" name="rowId" value="1">
@@ -56,7 +56,5 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 </x-admin>

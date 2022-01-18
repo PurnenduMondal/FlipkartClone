@@ -107,12 +107,44 @@ body {
     width: 710px;
     background: transparent;
 }
+.login__text1 {
+    position: absolute;
+    color: white;
+    font-size: 28px;
+    font-weight: 500;
+    top: 38px;
+    left: 68px;
+}
+.login__text2 {
+    position: absolute;
+    font-size: 18px;
+    top: 95px;
+    left: 67px;
+    line-height: 150%;
+    color: #dbdbdb;
+    width: 200px;
+}
+
 .loginForm__body {
     display: flex;
     margin-left: 35px;
     background: white;
     border-radius: 5px;
 }
+
+.loginForm__bodyImage {
+    height: 528px;
+    width: 100%;
+    background-color: #2874f0;
+    border-radius: 4px 0px 0px 4px;
+}
+
+.loginForm__bodyImage img {
+    position: absolute;
+    top: 331px;
+    left: 65px;
+}
+
 .loginForm__content {
     padding: 60px 35px 20px 35px;
 }
@@ -185,7 +217,7 @@ body {
     display: inline-block;
     position: relative;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 16px;
     cursor: pointer;
     flex: 0;
     height: 32px;

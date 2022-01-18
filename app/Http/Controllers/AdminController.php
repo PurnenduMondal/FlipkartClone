@@ -17,6 +17,7 @@ class AdminController extends Controller
 
 
     public function Dashboard(){
+        
         return view('admin.dashboard');
     }
 

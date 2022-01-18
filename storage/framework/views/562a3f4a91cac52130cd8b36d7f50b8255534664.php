@@ -47,7 +47,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-center"><?php echo e(Auth::user()->name); ?></td>
+                        <td class="text-center"><?php echo e(Auth::guard('admin')->user()->name); ?></td>
                         <td class="text-center">
                             <form method="post">
                                 <input type="hidden" name="rowId" value="1">
@@ -72,8 +72,6 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>

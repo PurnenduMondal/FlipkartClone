@@ -2,31 +2,108 @@
 <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method='POST' class="loginForm"> <!-- add action attribute using js -->
-                <!--URL::to('/') returns Base URL-->
-                @csrf
-                <div class="loginForm__body">
-                    <img src="{{ asset('image/LoginImage.jpg') }}">
-                    <div class="loginForm__content">
-                        <div class="loginForm__input">
-                            <input id="email" name="email" type="email" required>
-                            <label>Enter Email Address</label>
-                        </div>
-                        <div class="loginForm__input">
-                            <input id="password" name="password" type="password" required>
-                            <label>Enter Password</label>
-                        </div>
-                        <button class="loginForm_submit" type="submit">Login</button>
-                        <a href="">Create an account</a>
-                    </div>
-                </div>
+            <!-- action attribute added using Header.js -->
+            <div class="loginForm"> 
+                
+                <div class="loginForm__body"></div>
+            
                 <button type="button" data-bs-dismiss="modal" class="loginForm_close">
                     <span class="material-icons">close</span>
                 </button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
+<script>
+    var clickedButton = "";
+    
+    function login_form(buttonClassName){
+        clickedButton = buttonClassName;
+
+        $('.loginForm__body').html(
+            '<div class="loginForm__bodyImage">' +
+                '<img src="{{ asset("image/loginImg.jpg") }}">' +
+            '</div>' +
+            '<form method="POST" class="loginForm__content">' +
+                '@csrf' +
+                '<div class="loginForm__input">' +
+                    '<input id="email" name="email" type="email" required>' +
+                    '<label>Enter Email Address</label>' +
+                '</div>' +
+                '<div class="loginForm__input">' +
+                    '<input id="password" name="password" type="password" required>' +
+                    '<label>Enter Password</label>' +
+                '</div>'+
+                '<button class="loginForm_submit" type="submit">Login</button>'+
+                '<a onClick="registration_form()" class="login_link" style="text-decoration: none;font-weight: 500;cursor: pointer;">'+
+                    'Create an account'+
+                '</a>' +
+            '</form>'  +
+            '<div class="login__text1">Login</div>' +
+            '<div class="login__text2">Get access to your Orders, Wishlist and Recommendations</div>'
+        );
+
+        if(clickedButton == "adminLoginBtn") {
+            $(".loginForm__content").attr("action", window.location.origin + "/admin/login");
+            $('.login__text1').text('Admin Login');
+            $('.login__text2').text('Manage your Products, Update User Orders, and More ');
+        }
+        else if (clickedButton == "header__userLoginBtn") {
+            $(".loginForm__content").attr("action", window.location.origin + "/login");
+            $('.login__text1').text('Login');
+            $('.login__text2').text('Get access to your Orders, Wishlist and Recommendations');
+        };
+
+    }
+
+    function registration_form(){
+
+        $('.loginForm__body').html(
+            '<div class="loginForm__bodyImage">' +
+                '<img src="{{ asset("image/loginImg.jpg") }}">' +
+            '</div>' +
+            '<form method="POST" class="loginForm__content">' +
+            '@csrf' +
+            '<div class="loginForm__input">'+
+                '<input id = "first_name" name = "first_name" type = "text" required>'+
+                '<label>Enter Your First Name</label>'+
+            '</div >'+
+            '<div class="loginForm__input">'+
+                '<input id="last_name" name="last_name" type="text" required>'+
+                '<label>Enter Your Last Name</label>'+
+            '</div>'+
+            '<div class="loginForm__input">'+
+                '<input id="address" name="address" type="text" required>'+
+                '<label>Enter Your Address</label>'+
+            '</div>'+
+            '<div class="loginForm__input">'+
+                '<input id="email" name="email" type="email" required>'+
+                '<label>Enter Email Address</label>'+
+            '</div>'+
+            '<div class="loginForm__input">'+
+                '<input id="password" name="password" type="password" required>'+
+                '<label>Enter Password</label>'+
+            '</div>'+
+            '<button class="loginForm_submit" type="submit">Register</button>'+
+            '<a onClick="login_form('+"'"+clickedButton+"'"+')" class="login_link" style="text-decoration: none;font-weight: 500;cursor: pointer;">'+
+                'Login to your account</a>'+
+            '</a>' +
+            '</form>'  +
+            '<div class="login__text1">Sign Up</div>' +
+            '<div class="login__text2">Sign up with your email address to get started</div>'
+        );
+
+        if(clickedButton == "adminLoginBtn") {
+            $(".loginForm__content").attr("action", window.location.origin + "/admin/register");
+            $('.login__text1').text('Admin Sign Up');
+        }
+        else if (clickedButton == "header__userLoginBtn") {
+            $(".loginForm__content").attr("action", window.location.origin + "/register");
+            $('.login__text1').text('Sign Up');
+        };
+    }
+</script>  
+
 <div class="header">
     <a class="header__logo" href="/">
         <img class="header__logoImage"
@@ -46,8 +123,20 @@
 
     <div class="header__userLogin">
         <!-- a Button to trigger the login modal -->
-        <button class="header__userLoginBtn" data-bs-toggle="modal" data-bs-target="#loginModal">{{ Auth::user() ?
-            Auth::user()->name : 'Login' }}</button>
+        <button 
+            class="header__userLoginBtn" 
+            onClick="login_form('header__userLoginBtn')" 
+            data-bs-toggle="modal" 
+            data-bs-target="#loginModal"
+            style='{{ Auth::user() ? "color:white;background-color:#2874F0;border:none;display: flex;align-items: center;padding: 3px 20px;" : "" }}'
+        >
+            @if(Auth::user()) 
+                {{Auth::user()->first_name}}
+                <span style='font-size: 16px;padding: 3px 2px;' class="material-icons">keyboard_arrow_down</span>
+            @else
+                Login
+            @endif
+        </button>
         <div class="header__dropdown" style="left: -35px;">
             <div style="height: 17px;display: flex;justify-content: center;color: white;">
                 <span style="font-size: 30px;" class="material-icons">eject</span>
@@ -56,7 +145,7 @@
 
                 @if (!Auth::user())
                 <div class="header__dropdownItem">
-                    New customer?<a href="">Sign Up</a>
+                    New customer?<a class='login_link' onClick="login_form('header__userLoginBtn')" data-bs-toggle="modal" data-bs-target="#loginModal" >Sign Up</a>
                 </div>
                 @endif
                 <a class="header__dropdownItem" href="{{ Auth::user() ? route('user_profile') : ''}}">
@@ -77,7 +166,7 @@
                     </div>
                 </form>
                 @else
-                <div class="header__dropdownItem adminLoginBtn" data-bs-toggle="modal" data-bs-target="#loginModal">
+                <div class="header__dropdownItem adminLoginBtn" onClick="login_form('adminLoginBtn')" data-bs-toggle="modal" data-bs-target="#loginModal">
                     <span class="material-icons">admin_panel_settings</span> Admin Login
                 </div>
                 @endif
