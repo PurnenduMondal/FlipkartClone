@@ -91,7 +91,7 @@
                     <div></div> {{$order->status}}
                 </div>
                 <div class="order__cancelOrder">
-                    <img src="{{asset('image/ordercancel.svg')}}" alt=""> Cancel Order
+                    <img src="https://res.cloudinary.com/dj1rgwak8/image/upload/v1642616022/ordercancel.svg" alt=""> Cancel Order
                 </div>
             </div>
             @endforeach

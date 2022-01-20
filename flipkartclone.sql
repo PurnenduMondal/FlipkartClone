@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2022 at 09:38 PM
+-- Generation Time: Jan 18, 2022 at 07:51 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -106,7 +106,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (12, '2022_01_04_115913_delete__price_coloum_products_table', 9),
 (13, '2022_01_17_142625_create_orders_table', 10),
 (14, '2022_01_17_143301_create_orders_table', 11),
-(15, '2022_01_17_153152_create_orders_table', 12);
+(15, '2022_01_17_153152_create_orders_table', 12),
+(16, '2022_01_18_182804_delete_name_column_users_table', 13),
+(17, '2022_01_18_184118_delete_is_admin_column_users_table', 14);
 
 -- --------------------------------------------------------
 
@@ -219,12 +221,10 @@ INSERT INTO `product_images` (`id`, `product_id`, `image_name`, `created_at`, `u
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `isAdmin` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -237,8 +237,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `isAdmin`, `created_at`, `updated_at`, `first_name`, `last_name`, `gender`, `address`) VALUES
-(1, 'User', 'user@gmail.com', NULL, '$2y$10$xNtRk63AtFExa7TTQmuGCOrcGVy12uppYmzttjC11qqb/fhZZbHNK', NULL, 0, '2021-12-12 00:39:35', '2021-12-26 03:23:22', 'UserFirstName', 'UserLastName', 'male', 'UserAddress');
+INSERT INTO `users` (`id`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `first_name`, `last_name`, `gender`, `address`) VALUES
+(1, 'user@gmail.com', NULL, '$2y$10$xNtRk63AtFExa7TTQmuGCOrcGVy12uppYmzttjC11qqb/fhZZbHNK', NULL, '2021-12-12 00:39:35', '2021-12-26 03:23:22', 'UserFirstName', 'UserLastName', 'male', 'UserAddress'),
+(4, 'jiwohukeh@mailinator.com', NULL, '$2y$10$HDYW/KTlrht3/c4OIMyMoe9l90CP.xmwuokZmBZ5XtzganxD3XlHC', NULL, '2022-01-18 13:13:52', '2022-01-18 13:14:49', 'Rhea', 'Harrell', 'female', 'Autem alias est expe');
 
 --
 -- Indexes for dumped tables
@@ -335,7 +336,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -365,7 +366,7 @@ ALTER TABLE `product_images`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

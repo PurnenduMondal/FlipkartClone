@@ -32,12 +32,12 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
 
     <!-- JavaScript Link -->
-    <script type="text/javascript" src="<?php echo e(asset('js/Landing.js')); ?>"></script>
-    <script type="text/javascript" src="<?php echo e(asset('js/Header.js')); ?>"></script>
+    <script type="text/javascript" src="js/Landing.js"></script>
+    <script type="text/javascript" src="js/Header.js"></script>
 
     <!-- CSS Link -->
-    <link rel="stylesheet" href="<?php echo e(asset('css/Header.css')); ?>" />
-    <link rel="stylesheet" href="<?php echo e(asset('css/Landing.css')); ?>" />
+    <link rel="stylesheet" href="/css/Header.css" />
+    <link rel="stylesheet" href="/css/Landing.css" />
 
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />

@@ -106,7 +106,7 @@
 
                 </div>
                 <div class="order__cancelOrder">
-                    <img src="<?php echo e(asset('image/ordercancel.svg')); ?>" alt=""> Cancel Order
+                    <img src="<?php echo e(asset('images/ordercancel.svg')); ?>" alt=""> Cancel Order
                 </div>
             </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

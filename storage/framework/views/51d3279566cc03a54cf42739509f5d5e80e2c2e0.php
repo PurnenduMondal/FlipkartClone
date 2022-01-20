@@ -64,7 +64,7 @@
                     <p>My Cart (<?php echo e($cartProducts->count()); ?>)</p>
                     <?php if( !$cartProducts->isEmpty() ): ?>
                     <div class="cart__address">
-                        <img src="<?php echo e(asset('image/Pin.svg')); ?>" alt="">
+                        <img src="<?php echo e(asset('images/Pin.svg')); ?>" alt="">
                         <span>Deliver to</span>
                         <div>Address</div>
                     </div>

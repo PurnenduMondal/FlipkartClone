@@ -57,7 +57,7 @@
             </div>
             <a class="profile__sidebarItem" href="{{route('view_orders')}}">
                 <div>
-                    <img style="width:20px;height:20px;margin: 0 20px 0 9px;" src="{{asset('image/orders.svg')}}">
+                    <img style="width:20px;height:20px;margin: 0 20px 0 9px;" src="https://res.cloudinary.com/dj1rgwak8/image/upload/v1642616022/orders.svg">
                     MY ORDERS
                 </div>
                 <div>
@@ -68,7 +68,7 @@
             </a>
             <div class="profile__sidebarItem" style="color: #2874f0;">
                 <div>
-                    <img style="width:20px;height:20px;margin: 0 20px 0 9px;" src="{{asset('image/account.svg')}}">
+                    <img style="width:20px;height:20px;margin: 0 20px 0 9px;" src="https://res.cloudinary.com/dj1rgwak8/image/upload/v1642616021/account.svg">
                     ACCOUNT SETTINGS
                 </div>
                 <div>

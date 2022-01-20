@@ -61,7 +61,7 @@
             <div class="checkout__header">
                 <p>Order Summary</p>
                 <div class="checkout__address">
-                    <img src="<?php echo e(asset('image/Pin.svg')); ?>" alt="">
+                    <img src="<?php echo e(asset('images/Pin.svg')); ?>" alt="">
                     <span>Deliver to</span> 
                     <div>Address</div>
                 </div>

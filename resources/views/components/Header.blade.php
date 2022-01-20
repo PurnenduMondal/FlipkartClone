@@ -22,7 +22,7 @@
 
         $('.loginForm__body').html(
             '<div class="loginForm__bodyImage">' +
-                '<img src="{{ asset("image/loginImg.jpg") }}">' +
+                '<img src="https://res.cloudinary.com/dj1rgwak8/image/upload/v1642616021/loginimg.jpg">' +
             '</div>' +
             '<form method="POST" class="loginForm__content">' +
                 '@csrf' +
@@ -60,7 +60,7 @@
 
         $('.loginForm__body').html(
             '<div class="loginForm__bodyImage">' +
-                '<img src="{{ asset("image/loginImg.jpg") }}">' +
+                '<img src="https://res.cloudinary.com/dj1rgwak8/image/upload/v1642616021/loginimg.jpg">' +
             '</div>' +
             '<form method="POST" class="loginForm__content">' +
             '@csrf' +
